@@ -134,7 +134,7 @@ class StepConfirmar extends StatelessWidget {
                   turno: newTurno
                 );
                 stepperProvider.setTurnos = t;
-                Navigator.of(context).pushNamed('home');
+                Navigator.popAndPushNamed(context, 'home');
               },
               child: const Text('Confirmar')),
           ],

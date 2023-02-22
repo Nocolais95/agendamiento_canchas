@@ -12,20 +12,20 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stepperProvider = Provider.of<StepperProvider>(context);
-    Agenda agenda = stepperProvider.getAgenda();
-    agenda.turno.sort((a, b) => DateTime.parse(a.turno!.fecha!).compareTo(DateTime.parse(b.turno!.fecha!)));
+    stepperProvider.getAgenda().turno.sort((a, b) => DateTime.parse(a.turno!.fecha!).compareTo(DateTime.parse(b.turno!.fecha!)));
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mendoza Tennis Club'),
         centerTitle: true,
         backgroundColor: Colors.blueAccent,
         elevation: 0,
+        automaticallyImplyLeading: false,
       ),
-      body: agenda.turno.isEmpty
+      body: stepperProvider.getAgenda().turno.isEmpty
       ? const Center( child: Text('No hay turnos próximos'))
       : SingleChildScrollView(
         child: Column(
-          children: agenda.turno.map((data) => CanchaCard(
+          children: stepperProvider.getAgenda().turno.map((data) => CanchaCard(
             nameTennis: data.turno!.court!,
             date: data.turno!.fecha,
             nameUser: data.turno!.name,
