@@ -16,6 +16,7 @@ class StepperProvider with ChangeNotifier {
 
   Agenda getAgenda(){
     Agenda agendaMostrar = Preferences.turnos == '' ? Agenda(turno: []) : Agenda.fromJson(Preferences.turnos);
+    agendaMostrar.turno.sort((a, b) => DateTime.parse(a.turno!.fecha!).compareTo(DateTime.parse(b.turno!.fecha!)));
     return agendaMostrar;
   }
   setDeleteTurno(String id) {

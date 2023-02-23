@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:test_flutter/models/turno_model.dart';
 import 'package:test_flutter/providers/stepper_provider.dart';
 import 'package:test_flutter/widgets/cancha_card.dart';
 import 'package:test_flutter/widgets/show_dialog.dart';
@@ -12,7 +11,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stepperProvider = Provider.of<StepperProvider>(context);
-    stepperProvider.getAgenda().turno.sort((a, b) => DateTime.parse(a.turno!.fecha!).compareTo(DateTime.parse(b.turno!.fecha!)));
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mendoza Tennis Club'),
@@ -34,12 +32,19 @@ class HomeScreen extends StatelessWidget {
             id: data.id,
             height: 130,
             width: double.infinity,
-            onLognPress: (){
+            onDelete: (){
               showData(context, data.id!);
             },
             )).toList(),
         ),
       ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        color: Colors.blueAccent,
+        notchMargin: 5,
+        child: Container(height: 50),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blueAccent,
         child: const Icon(Icons.add, size: 35),

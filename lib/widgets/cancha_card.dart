@@ -8,7 +8,7 @@ import '../utils/select_court.dart';
 class CanchaCard extends StatelessWidget {
   final String nameTennis;
   final Function? onTap;
-  final Function? onLognPress;
+  final Function? onDelete;
   final String? nameUser;
   final String? date;
   final int? idTurno;
@@ -18,7 +18,7 @@ class CanchaCard extends StatelessWidget {
   final double? width;
 
   const CanchaCard({
-    Key? key, required this.nameTennis, this.onTap, this.nameUser, this.date, this.rain, this.height, this.width, this.onLognPress, this.idTurno, this.id,
+    Key? key, required this.nameTennis, this.onTap, this.nameUser, this.date, this.rain, this.height, this.width, this.onDelete, this.idTurno, this.id,
   }) : super(key: key);
 
   @override
@@ -34,13 +34,6 @@ class CanchaCard extends StatelessWidget {
             onTap!();
           }
         },
-        onLongPress: () {
-          if (onLognPress == null) {
-            null;
-          } else {
-            onLognPress!();
-          }
-        },
         child: Container(
           height: height ?? 130,
           width: width ?? MediaQuery.of(context).size.width * 0.9,
@@ -54,13 +47,36 @@ class CanchaCard extends StatelessWidget {
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(16),
                     topLeft: Radius.circular(16)),
-                  child: SizedBox(
-                    height: double.infinity,
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    child: Image(
-                      image: AssetImage(courtImage(nameTennis)),
-                      fit: BoxFit.cover,
-                    ),
+                  child: Stack(
+                    children: [
+                      SizedBox(
+                        height: double.infinity,
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Image(
+                          image: AssetImage(courtImage(nameTennis)),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      (onDelete != null)
+                      ? Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(20)
+                            )
+                          ),
+                          child: IconButton(
+                            onPressed: () => onDelete!(), 
+                            icon: const Icon(Icons.delete, size: 30),
+                          ),
+                        ),
+                      )
+                      : Container(),
+                    ],
                   ),
                 ),
               ),
